@@ -3,7 +3,7 @@ package ar.com.codoacodo.controllers;
 
 
 import ar.com.codoacodo.dao.impl.ArticuloDAOMysqlImpl;
-import ar.com.codoacodo.inteface.domain.Articulo;
+import ar.com.codoacodo.domain.Articulo;
 import dao.IArticuloDAO;
 
 public class GetArticuloController {

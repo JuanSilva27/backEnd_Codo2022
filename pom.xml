@@ -4,7 +4,7 @@
 	<artifactId>webapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<description>primer artefacto de codo a codo</description>
+	<description>primer artefacto del bootcamp java codo a codo</description>
 
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -12,6 +12,7 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 
+	<!-- dependencias: archivo.jar -->
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
@@ -19,6 +20,25 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.31</version>
 		</dependency>
+		<!--ctrl+shift+f-->
+		<!--habillito la posibilidad de usar Servlet y JSP-->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.3</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
+	<build>
+		<finalName>webapp</finalName>
+	</build>
 </project>

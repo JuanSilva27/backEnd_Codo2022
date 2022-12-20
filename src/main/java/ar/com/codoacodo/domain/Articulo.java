@@ -1,4 +1,4 @@
-package ar.com.codoacodo.inteface.domain;
+package ar.com.codoacodo.domain;
 
 public class Articulo {
 	private Long id;
@@ -77,7 +77,7 @@ public class Articulo {
 
 
 	public String getImg() {
-		return img;
+		return img != null ? img : "";
 	}
 
 

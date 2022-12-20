@@ -8,38 +8,54 @@ public class CrudMain {
 		//investigar Scanner para leer datos del teclado
 				Scanner teclado = new  Scanner(System.in);
 				
-				Long op;
-				do {
-					System.out.println("Selecione un opcion"
-							+ "1-alta"
-							+ "2-baja"
-							+ "3-modif"
-							+ "4-buscar por id"
-							+ "5-salir");
-					
-					//leer la opcion del telcado
-					op = //
-				}while(op .);
+				System.out.println("Por favor selecione la opcion deseada:");
+				System.out.println("1-Alta");
+				System.out.println("2-Baja");
+				System.out.println("3-Modificacion");
+				System.out.println("4-Buscar por id");
+				System.out.println("5-Salir");
 				
-				//op es una opcion valida 
-				switch (op) {
-				case 1:
-					//leer los datos del articulo
-					break;
-				case 2:
-					//pedir id para dar de baja
-					break;
+				
+	//int opcion = teclado.nextInt();----/al tener un ciclo for la variable "opcion" debe estar declarada 
+				//	fuera pero 	su clase "nextInt debe estar dentro del ciclo	
 
-				default:
-					break;
-				}
-				System.out.println("Ingrese id de articulo");
-				Long id = teclado.nextLong();
+				int opcion=0;
+
+				do {               //repite el menu de opciones mientras que la opcion !=5
+
+						/*System.out.println("Por favor selecione la opcion deseada:");
+						System.out.println("1-Alta");
+						System.out.println("2-Baja");
+						System.out.println("3-Modificacion");
+						System.out.println("4-Buscar por id");
+						System.out.println("5-Salir");*/
 				
-				System.out.println("id es "+ id);
-				
-				teclado.close();
+							opcion = teclado.nextInt();
+							switch(opcion) {
+								case 1:
+									System.out.println("ingrese los datos del articulo");
+									//create();
+									break;
+								case 2:
+									System.out.println("ingrese el id del articulo que quiere eliminar");
+									//delete();
+									break;
+								case 3:
+									System.out.println("ingrese el id del articulo que quiere modificar");
+									//update();
+									break;
+								case 4:
+									System.out.println("ingrese el id del articulo que quiere buscar");
+									//getById();
+									break;
+								case 5:
+									//salir();
+									break;
+								default:
+									System.out.println("Opcion invalida!!");
+								}
+	
+					}while(opcion!=5);
 
 			}
-
 }

@@ -1,40 +1,65 @@
 package ar.com.codoacodo.controllers;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import ar.com.codoacodo.dao.impl.ArticuloDAOMysqlImpl;
-import ar.com.codoacodo.inteface.domain.Articulo;
+import ar.com.codoacodo.domain.Articulo;
 import dao.IArticuloDAO;
 
-public class UpdateArticuloController {
+@WebServlet("/UpdateArticuloController")
+public class UpdateArticuloController extends HttpServlet {
 
-	public static void main(String[] args) throws Exception {
-		
-		//crear un articulo
-				//suponemos que recibimos los parametros enviados por un formularios
-				String titulo = "NUEVO ARTICULO modif";
-				String autor = "NUEVO AUTOR modif";
-				String img = "http://bla.img.com/img.jpg";
-				Float precio = 350.5f;
-				Long id = 3l; 
-				
-				//1 - busco el articulo a actualizar
-				IArticuloDAO dao = new ArticuloDAOMysqlImpl();
-				
-				Articulo articulo = dao.getById(id); 
-
-				if(articulo != null) {
-
-					//solo actualizo la imagen
-					articulo.setImg(img);
-					articulo.setAutor(autor);
-					articulo.setPrecio(precio);
-					articulo.setTitulo(titulo);
-					
-					dao.update(articulo);
-					
-					System.out.println(articulo);
-				}
-				
-
+	
+		//cargar el articulo/producto en la jsp
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			String id = req.getParameter("id");
+			
+			IArticuloDAO dao = new ArticuloDAOMysqlImpl();
+			
+			try {
+				var articulo = dao.getById(Long.parseLong(id));
+				req.setAttribute("producto", articulo);			
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			
+			//redirect a la jsp
+			//redirect a otra pagina u otro servlet(Controller/WebServlet)
+			getServletContext().getRequestDispatcher("/editar.jsp").forward(req, resp);			
 	}
+		
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			String titulo = req.getParameter("titulo");
+			String autor = req.getParameter("autor");;
+			String img = req.getParameter("imagen");
+			Float precio = Float.parseFloat(req.getParameter("precio"));
+			Long id = Long.parseLong(req.getParameter("id")); 
+			
+			//1 - busco el articulo a actualizar
+			IArticuloDAO dao = new ArticuloDAOMysqlImpl();
+			
+			try {
+				Articulo articulo = dao.getById(id);
+				//solo actualizo la imagen
+				articulo.setImg(img);
+				articulo.setAutor(autor);
+				articulo.setPrecio(precio);
+				articulo.setTitulo(titulo);
+				
+				dao.update(articulo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			
+			//redirect a otra pagina u otro servlet(Controller/WebServlet)
+			getServletContext().getRequestDispatcher("/FindAllArticulosController").forward(req, resp);
+			
+		}
 
 }

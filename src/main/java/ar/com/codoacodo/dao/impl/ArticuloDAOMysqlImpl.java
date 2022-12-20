@@ -8,7 +8,7 @@ import java.util.List;
 import java.sql.ResultSet;
 
 import ar.com.codoacodo.db.AdministradorDeConexiones;
-import ar.com.codoacodo.inteface.domain.Articulo;
+import ar.com.codoacodo.domain.Articulo;
 import dao.IArticuloDAO;
 
 public class ArticuloDAOMysqlImpl implements IArticuloDAO  {
@@ -44,6 +44,16 @@ public class ArticuloDAOMysqlImpl implements IArticuloDAO  {
 		}
 		
 		return articulo;
+	}
+	
+	public Articulo fromResultsetToArticulo(ResultSet resultSet) throws Exception{
+		Long idDb = resultSet.getLong("id");
+		String titulo = resultSet.getString("titulo");
+		String autor = resultSet.getString("autor");
+		Float precio = resultSet.getFloat("precio");
+		String img  = resultSet.getString("img");
+		
+		return new Articulo(idDb, titulo,autor, precio, img);
 	}
 
 	@Override
@@ -146,6 +156,32 @@ public class ArticuloDAOMysqlImpl implements IArticuloDAO  {
 				statement.execute();
 			}
 	
+	public List<Articulo> search(String clave) throws Exception {
+		//pasos para conectarme a la db
+		//1 - obtener conexion: java.sql.Connection
+		Connection connection = AdministradorDeConexiones.getConnection();
+		
+		//2 - armar el java.sql.Statement
+		Statement statement = connection.createStatement();
+		
+		//3 - obtener los resultados: java.sql.ResultSet
+		String sql = "select * from articulo where titulo like '%"+clave+"%'";
+		ResultSet resultSet = statement.executeQuery(sql);
+		//1    2      3      4     5
+		//id|titulo|autor |precio|img
+		//1 |algo  | autox|100   |url
+		
+		//Interface i = new ClaseQueimplementa();
+		List<Articulo> articulos = new ArrayList<>();
+		
+		//4 - extraer los datos
+		while(resultSet.next()) {//true|false
+			//lo agrego a la lista de articulos
+			articulos.add(fromResultsetToArticulo(resultSet));
+		}
+		
+		return articulos;
+	}
 	
 	
 }
